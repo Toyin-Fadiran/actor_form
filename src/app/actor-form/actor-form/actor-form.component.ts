@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Actor } from '../../actor';
-import { AnyARecord } from 'dns';
+//import { AnyARecord } from 'dns';
 import { FormsModule } from '@angular/forms'; // Import FormsModule
 import { CommonModule } from '@angular/common';
 
@@ -13,39 +13,40 @@ import { CommonModule } from '@angular/common';
 })
 export class ActorFormComponent {
 
-  skills = ['Method Acting', 'Singing', 'Dancing', 'Swordfighting'];
+  model: 
+  { 
+    name: string; 
+    skill: string; 
+    studio?: string 
+  };
+  skills: string[];
+  submitted: boolean = false;
 
-  //public skills: any[] = ['Method Acting', 'Singing', 'Dancing', 'Swordfighting'];
+  constructor() {
+    // this.model = {
+    //   name: '',
+    //   studio: '',
+    //   skill: ''
+    // };
 
-model =  new Actor(18, 'Tom Cruise', this.skills[0], 'CW Productions');
+    this.skills = ['Method Acting', 'Singing', 'Dancing', 'Swordfighting'];
+    this.model = new Actor(-1, "TestName", this.skills[0], "CW Productions");
+    //this.submitted = false;
+  }
 
-submitted = false;
+  onSubmit() {
+    this.submitted = true;
+    console.log(this.model);
+  }
 
-onSubmit() {
-  this.submitted = true;
-}
+  newActor() {
+    this.model = { name: '', studio: '', skill: '' };
+    this.submitted = false;
+  }
 
-heroine(): Actor {
-  const myActress = new Actor(42, 'Marilyn Monroe', 'Singing');
-  console.log('My actress is called ' + myActress.name); // "My actress is called Marilyn"
-
-  return myActress;
-
-}
-
-newActor() {
-    this.model = new Actor(42, '', '');
-}
-
-  //////// NOT SHOWN IN DOCS ////////
-
-  // Reveal in html:
+    // Reveal in html:
   //   Name via form.controls = {{showFormControls(actorForm)}}
   showFormControls(form: any) {
     return form && form.controls.name && form.controls.name.value; // Tom Cruise
   }
-
-  /////////////////////////////
-
-
 }
